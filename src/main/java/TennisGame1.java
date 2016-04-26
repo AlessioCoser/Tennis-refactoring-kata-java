@@ -16,28 +16,43 @@ public class TennisGame1 implements TennisGame {
     }
 
     public String getScore() {
-        String score = getScoreString();
+        String score = scoreString();
 
         if (scoresAreEqual()) {
-            score = getDrawString();
+            score = drawString();
         }else if (isPlayOff()) {
-            int minusResult = player1.getScore() - player2.getScore();
-            if (minusResult==1) score ="Advantage " + player1.getName();
-            else if (minusResult ==-1) score ="Advantage " + player2.getName();
-            else if (minusResult>=2) score = "Win for " + player1.getName();
-            else score ="Win for " + player2.getName();
+            score = winningString();
         }
+
         return score;
     }
 
-    private String getScoreString() {
+    private Player getWinningPlayer() {
+        if (player1.getScore() > player2.getScore())
+            return player1;
+
+        return player2;
+    }
+
+    private int scoreDifference(){
+        return Math.abs(player1.getScore() - player2.getScore());
+    }
+
+    private String scoreString() {
         return player1.getScoreCode() + "-" + player2.getScoreCode();
     }
 
-    private String getDrawString() {
+    private String drawString() {
         if(scoreGreaterThanTwo())
             return "Deuce";
         return player1.getScoreCode() + "-All";
+    }
+
+    private String winningString() {
+        if (scoreDifference() >= 2)
+            return "Win for " + getWinningPlayer().getName();
+
+        return "Advantage " + getWinningPlayer().getName();
     }
 
     private boolean scoresAreEqual() {
