@@ -16,33 +16,39 @@ public class TennisGame1 implements TennisGame {
     }
 
     public String getScore() {
-        String score = "";
+        String score = getScoreString();
 
         if (scoresAreEqual()) {
-            if( player1.getScore() < 3)
-                score = player1.getScoreCode() + "-All";
-            else
-                score = "Deuce";
-        }
-        else if (atLeastOneScoreGreaterThanThree()) {
+            score = getDrawString();
+        }else if (isPlayOff()) {
             int minusResult = player1.getScore() - player2.getScore();
             if (minusResult==1) score ="Advantage " + player1.getName();
             else if (minusResult ==-1) score ="Advantage " + player2.getName();
             else if (minusResult>=2) score = "Win for " + player1.getName();
             else score ="Win for " + player2.getName();
-        }else {
-            for (int i = 1; i < 3; i++) {
-                score = player1.getScoreCode() + "-" + player2.getScoreCode() ;
-            }
         }
         return score;
+    }
+
+    private String getScoreString() {
+        return player1.getScoreCode() + "-" + player2.getScoreCode();
+    }
+
+    private String getDrawString() {
+        if(scoreGreaterThanTwo())
+            return "Deuce";
+        return player1.getScoreCode() + "-All";
     }
 
     private boolean scoresAreEqual() {
         return (player1.getScore() == player2.getScore());
     }
 
-    private boolean atLeastOneScoreGreaterThanThree() {
+    private boolean scoreGreaterThanTwo() {
+        return (player1.getScore() >= 3);
+    }
+
+    private boolean isPlayOff() {
         return (player1.getScore() > 3 || player2.getScore() > 3);
     }
 }
