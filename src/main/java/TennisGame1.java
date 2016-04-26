@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class TennisGame1 implements TennisGame {
 
     private int m_score1 = 0;
@@ -19,25 +22,19 @@ public class TennisGame1 implements TennisGame {
 
     public String getScore() {
         String score = "";
-        int tempScore=0;
+
+        Map<Integer, String> scoreCodes = new HashMap<Integer, String>();
+        scoreCodes.put(0, "Love");
+        scoreCodes.put(1, "Fifteen");
+        scoreCodes.put(2, "Thirty");
+        scoreCodes.put(3, "Forty");
+
         if (m_score1==m_score2)
         {
-            switch (m_score1)
-            {
-                case 0:
-                    score = "Love-All";
-                    break;
-                case 1:
-                    score = "Fifteen-All";
-                    break;
-                case 2:
-                    score = "Thirty-All";
-                    break;
-                default:
-                    score = "Deuce";
-                    break;
-
-            }
+            if( m_score1 < 3)
+                score = scoreCodes.get(m_score1) + "-All";
+            else
+                score = "Deuce";
         }
         else if (m_score1>=4 || m_score2>=4)
         {
@@ -51,23 +48,7 @@ public class TennisGame1 implements TennisGame {
         {
             for (int i=1; i<3; i++)
             {
-                if (i==1) tempScore = m_score1;
-                else { score+="-"; tempScore = m_score2;}
-                switch(tempScore)
-                {
-                    case 0:
-                        score+="Love";
-                        break;
-                    case 1:
-                        score+="Fifteen";
-                        break;
-                    case 2:
-                        score+="Thirty";
-                        break;
-                    case 3:
-                        score+="Forty";
-                        break;
-                }
+                score = scoreCodes.get(m_score1) + "-" + scoreCodes.get(m_score2) ;
             }
         }
         return score;
