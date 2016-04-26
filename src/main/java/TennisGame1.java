@@ -8,6 +8,14 @@ public class TennisGame1 implements TennisGame {
     private String player1Name;
     private String player2Name;
 
+    private static Map<Integer, String> SCORE_CODE = new HashMap<Integer, String>();
+    static {
+        SCORE_CODE.put(0, "Love");
+        SCORE_CODE.put(1, "Fifteen");
+        SCORE_CODE.put(2, "Thirty");
+        SCORE_CODE.put(3, "Forty");
+    }
+
     public TennisGame1(String player1Name, String player2Name) {
         this.player1Name = player1Name;
         this.player2Name = player2Name;
@@ -23,16 +31,10 @@ public class TennisGame1 implements TennisGame {
     public String getScore() {
         String score = "";
 
-        Map<Integer, String> scoreCodes = new HashMap<Integer, String>();
-        scoreCodes.put(0, "Love");
-        scoreCodes.put(1, "Fifteen");
-        scoreCodes.put(2, "Thirty");
-        scoreCodes.put(3, "Forty");
-
         if (m_score1==m_score2)
         {
             if( m_score1 < 3)
-                score = scoreCodes.get(m_score1) + "-All";
+                score = SCORE_CODE.get(m_score1) + "-All";
             else
                 score = "Deuce";
         }
@@ -48,7 +50,7 @@ public class TennisGame1 implements TennisGame {
         {
             for (int i=1; i<3; i++)
             {
-                score = scoreCodes.get(m_score1) + "-" + scoreCodes.get(m_score2) ;
+                score = SCORE_CODE.get(m_score1) + "-" + SCORE_CODE.get(m_score2) ;
             }
         }
         return score;
