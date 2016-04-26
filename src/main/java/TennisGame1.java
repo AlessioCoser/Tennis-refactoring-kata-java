@@ -31,14 +31,14 @@ public class TennisGame1 implements TennisGame {
     public String getScore() {
         String score = "";
 
-        if (m_score1==m_score2)
+        if (scoresAreEqual(m_score1, m_score2))
         {
             if( m_score1 < 3)
                 score = SCORE_CODE.get(m_score1) + "-All";
             else
                 score = "Deuce";
         }
-        else if (m_score1>=4 || m_score2>=4)
+        else if (atLeastOneScoreGreaterThanThree(m_score1, m_score2))
         {
             int minusResult = m_score1-m_score2;
             if (minusResult==1) score ="Advantage player1";
@@ -54,5 +54,13 @@ public class TennisGame1 implements TennisGame {
             }
         }
         return score;
+    }
+
+    private boolean scoresAreEqual(int score1, int score2) {
+        return (score1==score2);
+    }
+
+    private boolean atLeastOneScoreGreaterThanThree(int score1, int score2) {
+        return (score1 > 3 || score2 > 3);
     }
 }
