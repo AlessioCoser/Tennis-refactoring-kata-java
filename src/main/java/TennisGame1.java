@@ -18,13 +18,13 @@ public class TennisGame1 implements TennisGame {
     public String getScore() {
         String score = "";
 
-        if (scoresAreEqual(player1.getScore(), player2.getScore())) {
+        if (scoresAreEqual()) {
             if( player1.getScore() < 3)
                 score = player1.getScoreCode() + "-All";
             else
                 score = "Deuce";
         }
-        else if (atLeastOneScoreGreaterThanThree(player1.getScore(), player2.getScore())) {
+        else if (atLeastOneScoreGreaterThanThree()) {
             int minusResult = player1.getScore() - player2.getScore();
             if (minusResult==1) score ="Advantage " + player1.getName();
             else if (minusResult ==-1) score ="Advantage " + player2.getName();
@@ -38,11 +38,11 @@ public class TennisGame1 implements TennisGame {
         return score;
     }
 
-    private boolean scoresAreEqual(int score1, int score2) {
-        return (score1 == score2);
+    private boolean scoresAreEqual() {
+        return (player1.getScore() == player2.getScore());
     }
 
-    private boolean atLeastOneScoreGreaterThanThree(int score1, int score2) {
-        return (score1 > 3 || score2 > 3);
+    private boolean atLeastOneScoreGreaterThanThree() {
+        return (player1.getScore() > 3 || player2.getScore() > 3);
     }
 }
