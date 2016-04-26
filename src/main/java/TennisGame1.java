@@ -1,17 +1,7 @@
-import java.util.HashMap;
-import java.util.Map;
 
 public class TennisGame1 implements TennisGame {
     private Player player1;
     private Player player2;
-
-    private static Map<Integer, String> SCORE_CODE = new HashMap<Integer, String>();
-    static {
-        SCORE_CODE.put(0, "Love");
-        SCORE_CODE.put(1, "Fifteen");
-        SCORE_CODE.put(2, "Thirty");
-        SCORE_CODE.put(3, "Forty");
-    }
 
     public TennisGame1(String namePlayer1, String namePlayer2) {
         player1 = new Player(namePlayer1);
@@ -30,7 +20,7 @@ public class TennisGame1 implements TennisGame {
 
         if (scoresAreEqual(player1.getScore(), player2.getScore())) {
             if( player1.getScore() < 3)
-                score = SCORE_CODE.get(player1.getScore()) + "-All";
+                score = player1.getScoreCode() + "-All";
             else
                 score = "Deuce";
         }
@@ -42,7 +32,7 @@ public class TennisGame1 implements TennisGame {
             else score ="Win for " + player2.getName();
         }else {
             for (int i = 1; i < 3; i++) {
-                score = SCORE_CODE.get(player1.getScore()) + "-" + SCORE_CODE.get(player2.getScore()) ;
+                score = player1.getScoreCode() + "-" + player2.getScoreCode() ;
             }
         }
         return score;
