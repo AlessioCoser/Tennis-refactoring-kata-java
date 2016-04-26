@@ -2,11 +2,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TennisGame1 implements TennisGame {
-
-    private int scorePlayer1 = 0;
-    private int scorePlayer2 = 0;
-    private String namePlayer1;
-    private String namePlayer2;
+    private Player player1;
+    private Player player2;
 
     private static Map<Integer, String> SCORE_CODE = new HashMap<Integer, String>();
     static {
@@ -17,35 +14,35 @@ public class TennisGame1 implements TennisGame {
     }
 
     public TennisGame1(String namePlayer1, String namePlayer2) {
-        this.namePlayer1 = namePlayer1;
-        this.namePlayer2 = namePlayer2;
+        player1 = new Player(namePlayer1);
+        player2 = new Player(namePlayer2);
     }
 
     public void wonPoint(String playerName) {
-        if (playerName == namePlayer1)
-            scorePlayer1 += 1;
+        if (playerName == player1.getName())
+            player1.addScore();
         else
-            scorePlayer2 += 1;
+            player2.addScore();
     }
 
     public String getScore() {
         String score = "";
 
-        if (scoresAreEqual(scorePlayer1, scorePlayer2)) {
-            if( scorePlayer1 < 3)
-                score = SCORE_CODE.get(scorePlayer1) + "-All";
+        if (scoresAreEqual(player1.getScore(), player2.getScore())) {
+            if( player1.getScore() < 3)
+                score = SCORE_CODE.get(player1.getScore()) + "-All";
             else
                 score = "Deuce";
         }
-        else if (atLeastOneScoreGreaterThanThree(scorePlayer1, scorePlayer2)) {
-            int minusResult = scorePlayer1 - scorePlayer2;
-            if (minusResult==1) score ="Advantage " + namePlayer1;
-            else if (minusResult ==-1) score ="Advantage " + namePlayer2;
-            else if (minusResult>=2) score = "Win for " + namePlayer1;
-            else score ="Win for " + namePlayer2;
+        else if (atLeastOneScoreGreaterThanThree(player1.getScore(), player2.getScore())) {
+            int minusResult = player1.getScore() - player2.getScore();
+            if (minusResult==1) score ="Advantage " + player1.getName();
+            else if (minusResult ==-1) score ="Advantage " + player2.getName();
+            else if (minusResult>=2) score = "Win for " + player1.getName();
+            else score ="Win for " + player2.getName();
         }else {
             for (int i = 1; i < 3; i++) {
-                score = SCORE_CODE.get(scorePlayer1) + "-" + SCORE_CODE.get(scorePlayer2) ;
+                score = SCORE_CODE.get(player1.getScore()) + "-" + SCORE_CODE.get(player2.getScore()) ;
             }
         }
         return score;
