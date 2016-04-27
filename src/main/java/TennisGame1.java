@@ -16,54 +16,7 @@ public class TennisGame1 implements TennisGame {
     }
 
     public String getScore() {
-        String score = scoreString();
-
-        if (scoresAreEqual()) {
-            score = drawString();
-        }else if (isPlayOff()) {
-            score = winningString();
-        }
-
-        return score;
-    }
-
-    private Player getWinningPlayer() {
-        if (player1.getScore() > player2.getScore())
-            return player1;
-
-        return player2;
-    }
-
-    private int scoreDifference(){
-        return Math.abs(player1.getScore() - player2.getScore());
-    }
-
-    private String scoreString() {
-        return player1.getScoreCode() + "-" + player2.getScoreCode();
-    }
-
-    private String drawString() {
-        if(scoreGreaterThanTwo())
-            return "Deuce";
-        return player1.getScoreCode() + "-All";
-    }
-
-    private String winningString() {
-        if (scoreDifference() >= 2)
-            return "Win for " + getWinningPlayer().getName();
-
-        return "Advantage " + getWinningPlayer().getName();
-    }
-
-    private boolean scoresAreEqual() {
-        return (player1.getScore() == player2.getScore());
-    }
-
-    private boolean scoreGreaterThanTwo() {
-        return (player1.getScore() >= 3);
-    }
-
-    private boolean isPlayOff() {
-        return (player1.getScore() > 3 || player2.getScore() > 3);
+        ScoreFormatter scoreFormatter = new ScoreFormatter(player1, player2);
+        return scoreFormatter.format();
     }
 }
