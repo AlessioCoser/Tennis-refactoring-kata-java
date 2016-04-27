@@ -11,29 +11,34 @@ public class ScoreFormatter {
     }
 
     public String format() {
-        if (scoresAreEqual())
-            return drawString();
+        if (areEquals())
+            return draw();
 
-        if (isPlayOff())
-            return winningString();
+        if (isWinning())
+            return winning();
 
-        return scoreString();
+        if (isAdvantage())
+            return advantage();
+
+        return normal();
     }
 
-    private String scoreString() {
+    private String normal() {
         return SCORE_CODES[player1.getScore()] + "-" + SCORE_CODES[player2.getScore()];
     }
 
-    private String drawString() {
-        if(scoreGreaterThanTwo())
+    private String draw() {
+        if(isGreaterThanTwo())
             return "Deuce";
+
         return SCORE_CODES[player1.getScore()] + "-All";
     }
 
-    private String winningString() {
-        if (scoreDifference() >= 2)
-            return "Win for " + getWinningPlayer().getName();
+    private String winning() {
+        return "Win for " + getWinningPlayer().getName();
+    }
 
+    private String advantage() {
         return "Advantage " + getWinningPlayer().getName();
     }
 
@@ -44,19 +49,23 @@ public class ScoreFormatter {
         return player2;
     }
 
-    private int scoreDifference(){
+    private int difference(){
         return Math.abs(player1.getScore() - player2.getScore());
     }
 
-    private boolean scoresAreEqual() {
+    private boolean areEquals() {
         return (player1.getScore() == player2.getScore());
     }
 
-    private boolean scoreGreaterThanTwo() {
+    private boolean isGreaterThanTwo() {
         return (player1.getScore() >= 3);
     }
 
-    private boolean isPlayOff() {
+    private boolean isAdvantage() {
         return (player1.getScore() > 3 || player2.getScore() > 3);
+    }
+
+    private boolean isWinning() {
+        return isAdvantage() && (difference() >= 2);
     }
 }
